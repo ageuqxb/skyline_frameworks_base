@@ -541,7 +541,8 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
     void extendDozePulse();
 
     boolean shouldDelayWakeUpAnimation();
-    GameSpaceManager getGameSpaceManager();
+
+    void setBlockedGesturalNavigation(boolean blocked);
 
     GameSpaceManager getGameSpaceManager();
 
