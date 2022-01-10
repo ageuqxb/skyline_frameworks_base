@@ -23,6 +23,8 @@ import android.content.Context
 import android.graphics.Point
 import android.hardware.biometrics.BiometricFingerprintConstants
 import android.hardware.biometrics.BiometricSourceType
+import android.os.UserHandle
+import android.provider.Settings
 import androidx.annotation.VisibleForTesting
 import com.android.keyguard.KeyguardUpdateMonitor
 import com.android.keyguard.KeyguardUpdateMonitorCallback
@@ -94,6 +96,10 @@ class AuthRippleController @Inject constructor(
     override fun onInit() {
         unlockAnimationEnabled = sysuiContext.resources.getBoolean(R.bool.config_enableUnlockRippleAnimation)
     }
+
+    private val isRippleEnabled: Boolean
+        get() = Settings.System.getIntForUser(context.contentResolver,
+            Settings.System.ENABLE_RIPPLE_EFFECT, 1, UserHandle.USER_CURRENT) == 1
 
     @VisibleForTesting
     public override fun onViewAttached() {
@@ -195,6 +201,14 @@ class AuthRippleController @Inject constructor(
     }
 
     override fun onKeyguardFadingAwayChanged() {
+        if (!isRippleEnabled) {
+            // reset and hide the scrim so it doesn't appears on
+            // the next notification shade usage
+            centralSurfaces.lightRevealScrim?.revealAmount = 1f
+            startLightRevealScrimOnKeyguardFadingAway = false
+            return
+        }
+
         if (featureFlags.isEnabled(Flags.LIGHT_REVEAL_MIGRATION)) {
             return
         }
