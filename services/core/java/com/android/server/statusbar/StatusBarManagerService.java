@@ -1008,8 +1008,6 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
     }
 
     // TODO(b/117478341): make it aware of multi-display if needed.
-    @Override
-
 
     @Override
     public void setBlockedGesturalNavigation(boolean blocked) {
