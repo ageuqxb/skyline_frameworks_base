@@ -543,8 +543,6 @@ public interface CentralSurfaces extends Dumpable, ActivityStarter, LifecycleOwn
     boolean shouldDelayWakeUpAnimation();
     GameSpaceManager getGameSpaceManager();
 
-    GameSpaceManager getGameSpaceManager();
-
     public static class KeyboardShortcutsMessage {
         final int mDeviceId;
 
