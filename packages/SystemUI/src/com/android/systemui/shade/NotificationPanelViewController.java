@@ -666,7 +666,6 @@ public final class NotificationPanelViewController implements Dumpable {
                     step.getTransitionState() == TransitionState.RUNNING;
             };
 
-
     private final TransitionListenerAdapter mKeyguardStatusAlignmentTransitionListener =
             new TransitionListenerAdapter() {
                 @Override
@@ -681,9 +680,6 @@ public final class NotificationPanelViewController implements Dumpable {
             };
 
     private final TunerService mTunerService;
-
-    private boolean mBlockedGesturalNavigation = false;
-
 
     @Inject
     public NotificationPanelViewController(NotificationPanelView view,
@@ -3461,8 +3457,6 @@ public final class NotificationPanelViewController implements Dumpable {
                 .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_VISIBLE, getExpandedFraction() > 0)
                 .setFlag(SYSUI_STATE_NOTIFICATION_PANEL_EXPANDED,
                         isFullyExpanded() && !mQsController.getExpanded())
-                        .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
-        mBlockedGesturalNavigation || isFullyExpanded() && isInSettings())
                 .setFlag(SYSUI_STATE_QUICK_SETTINGS_EXPANDED,
                         isFullyExpanded() && mQsController.getExpanded()).commitUpdate(mDisplayId);
     }
@@ -4201,11 +4195,6 @@ public final class NotificationPanelViewController implements Dumpable {
         }
         updateExpandedHeightToMaxHeight();
     }
-
-    public void setBlockedGesturalNavigation(boolean blocked) {
-        mBlockedGesturalNavigation = blocked;
-    }
-
 
     private final class NsslHeightChangedListener implements
             ExpandableView.OnHeightChangedListener {
